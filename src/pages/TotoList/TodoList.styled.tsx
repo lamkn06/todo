@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 namespace sc {
   export const Container = styled.div`
-    max-width: 400px;
+    max-width: 500px;
     width: 100%;
     margin: auto;
     background-color: #fff;
@@ -56,6 +56,16 @@ namespace sc {
   export const Count = styled.div`
     color: #8a9ca5;
     font-size: 14px; ;
+  `;
+
+  export const ToggleAll = styled.button`
+    border-radius: 16px;
+    padding: 2px 15px;
+    border: 1px solid;
+    background-color: #4acea3;
+    border-color: #38bb90;
+    color: #fff;
+    cursor: pointer;
   `;
 }
 

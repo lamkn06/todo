@@ -5,7 +5,6 @@ import { Items } from '../../components/Items/Items';
 import { FILTER, Todo } from '../../models/todo';
 import sc from './TodoList.styled';
 
-
 const stateTodos: Todo[] = [
   {
     id: uuidv4(),
@@ -22,7 +21,7 @@ const stateTodos: Todo[] = [
     name: 'task 03',
     isComplete: false,
   },
-]
+];
 
 const TotoList = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -33,19 +32,16 @@ const TotoList = () => {
     setTodos(stateTodos);
   }, []);
 
-  
   useEffect(() => {
     if (filterStatus === FILTER.ALL) {
-      setTodos(stateTodos);  
-      
+      setTodos(stateTodos);
     }
     if (filterStatus === FILTER.ACTIVE) {
-      setTodos(stateTodos.filter(todo => !todo.isComplete));  
+      setTodos(stateTodos.filter(todo => !todo.isComplete));
     }
     if (filterStatus === FILTER.COMPLETED) {
-      setTodos(stateTodos.filter(todo => !!todo.isComplete));  
+      setTodos(stateTodos.filter(todo => !!todo.isComplete));
     }
-    
   }, [filterStatus]);
 
   const handleFilterStatus = (status: string) => {
@@ -68,7 +64,7 @@ const TotoList = () => {
       name: newValue,
       isComplete: false,
     }),
-    setTodos(stateTodos);
+      setTodos(stateTodos);
     setNewValue('');
   };
 
@@ -84,6 +80,14 @@ const TotoList = () => {
     setTodos(newTodos);
   };
 
+  const handleToggleAll = () => {
+    const isFull = todos.filter(todo => !todo.isComplete).length === 0
+    setTodos(todos.map(todo => {
+      todo.isComplete = !isFull
+      return todo
+    }))
+  };
+
   const handleDelete = (id: string) => {
     const newTodos = todos.filter(todo => todo.id !== id);
 
@@ -96,11 +100,28 @@ const TotoList = () => {
       <sc.Tools>
         <sc.Count>{todos.length} tasks</sc.Count>
         <div>
-          <sc.Filter onClick={() => handleFilterStatus(FILTER.ALL)} active={filterStatus === FILTER.ALL}>All</sc.Filter>
-          <sc.Filter onClick={() => handleFilterStatus(FILTER.ACTIVE)} active={filterStatus === FILTER.ACTIVE}>Active</sc.Filter>
-          <sc.Filter onClick={() => handleFilterStatus(FILTER.COMPLETED)} active={filterStatus === FILTER.COMPLETED}>Completed</sc.Filter>
+          <sc.Filter
+            onClick={() => handleFilterStatus(FILTER.ALL)}
+            active={filterStatus === FILTER.ALL}
+          >
+            All
+          </sc.Filter>
+          <sc.Filter
+            onClick={() => handleFilterStatus(FILTER.ACTIVE)}
+            active={filterStatus === FILTER.ACTIVE}
+          >
+            Active
+          </sc.Filter>
+          <sc.Filter
+            onClick={() => handleFilterStatus(FILTER.COMPLETED)}
+            active={filterStatus === FILTER.COMPLETED}
+          >
+            Completed
+          </sc.Filter>
         </div>
+        <sc.ToggleAll onClick={handleToggleAll}>Toggle All</sc.ToggleAll>
       </sc.Tools>
+
       <form onSubmit={handleAdd}>
         <Input
           placeholder="Add a new task..."
