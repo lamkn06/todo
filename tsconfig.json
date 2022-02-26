@@ -8,20 +8,21 @@
     "noImplicitAny": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true,
     "removeComments": false,
     "forceConsistentCasingInFileNames": false,
     "strictNullChecks": false,
     "noImplicitThis": true,
     "allowSyntheticDefaultImports": true,
-    "noUnusedLocals": false,
-    "allowUnusedLabels": false,
-    "baseUrl": ".",
-    "paths": {
-      "*": ["src/*"],
-      "images/*": ["src/assets/images/*"]
-      // "styles/*": ["src/assets/styles/*"]
-    }
+    "noUnusedLocals": true
   },
-  "exclude": ["node_modules", "build", "**/*.stories.tsx", "**/*.test.ts"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "**/*.stories.tsx",
+    "ui-e2e/**/*",
+    "src/assets/fonts/*",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
 }

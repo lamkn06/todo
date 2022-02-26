@@ -1,11 +1,10 @@
 
 import 'app.scss';
+import TotoList from './pages/TotoList/TotoList';
 const App: React.FC = () => {
  
   return (
-    <div>
-      test thu cai coi
-    </div>
+    <TotoList />
   );
 };
 

@@ -2,8 +2,7 @@ import { MemoryRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { storiesOf } from '@storybook/react';
-import {Input}  from '../Input'
-
+import { Input } from '../Input';
 
 const Container = styled.div`
   width: 1600px;
@@ -12,12 +11,10 @@ const Container = styled.div`
 
 const Story = () => (
   <MemoryRouter>
-  
-      <Container className="visual-reg">
-        <Input label={'Name'}/>
-      </Container>
-    
+    <Container className="visual-reg">
+      <Input placeholder={'Add a new task...'} value={''} />
+    </Container>
   </MemoryRouter>
 );
 
-storiesOf('Input', module).add('default', () => <Story  />);
+storiesOf('Input', module).add('default', () => <Story />);
