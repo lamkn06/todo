@@ -2,9 +2,27 @@ import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Input } from '../../components/Input/Input';
 import { Items } from '../../components/Items/Items';
-import { Todo } from '../../models/todo';
+import { FILTER, Todo } from '../../models/todo';
 import sc from './TodoList.styled';
 
+
+const stateTodos: Todo[] = [
+  {
+    id: uuidv4(),
+    name: 'task 01',
+    isComplete: false,
+  },
+  {
+    id: uuidv4(),
+    name: 'task 02',
+    isComplete: true,
+  },
+  {
+    id: uuidv4(),
+    name: 'task 03',
+    isComplete: false,
+  },
+]
 
 const TotoList = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -12,24 +30,23 @@ const TotoList = () => {
   const [filterStatus, setFilterStatus] = useState<string>('all');
 
   useEffect(() => {
-    setTodos([
-      {
-        id: uuidv4(),
-        name: 'task 01',
-        isComplete: false,
-      },
-      {
-        id: uuidv4(),
-        name: 'task 02',
-        isComplete: true,
-      },
-      {
-        id: uuidv4(),
-        name: 'task 03',
-        isComplete: false,
-      },
-    ]);
+    setTodos(stateTodos);
   }, []);
+
+  
+  useEffect(() => {
+    if (filterStatus === FILTER.ALL) {
+      setTodos(stateTodos);  
+      
+    }
+    if (filterStatus === FILTER.ACTIVE) {
+      setTodos(stateTodos.filter(todo => !todo.isComplete));  
+    }
+    if (filterStatus === FILTER.COMPLETED) {
+      setTodos(stateTodos.filter(todo => !!todo.isComplete));  
+    }
+    
+  }, [filterStatus]);
 
   const handleFilterStatus = (status: string) => {
     setFilterStatus(status);
@@ -46,14 +63,12 @@ const TotoList = () => {
       return;
     }
 
-    setTodos(
-      todos.concat({
-        id: uuidv4(),
-        name: newValue,
-        isComplete: false,
-      }),
-    );
-
+    stateTodos.push({
+      id: uuidv4(),
+      name: newValue,
+      isComplete: false,
+    }),
+    setTodos(stateTodos);
     setNewValue('');
   };
 
@@ -81,9 +96,9 @@ const TotoList = () => {
       <sc.Tools>
         <sc.Count>{todos.length} tasks</sc.Count>
         <div>
-          <sc.Filter onClick={() => handleFilterStatus('all')} active={filterStatus === 'all'}>All</sc.Filter>
-          <sc.Filter onClick={() => handleFilterStatus('active')} active={filterStatus === 'active'}>Active</sc.Filter>
-          <sc.Filter onClick={() => handleFilterStatus('completed')} active={filterStatus === 'completed'}>Completed</sc.Filter>
+          <sc.Filter onClick={() => handleFilterStatus(FILTER.ALL)} active={filterStatus === FILTER.ALL}>All</sc.Filter>
+          <sc.Filter onClick={() => handleFilterStatus(FILTER.ACTIVE)} active={filterStatus === FILTER.ACTIVE}>Active</sc.Filter>
+          <sc.Filter onClick={() => handleFilterStatus(FILTER.COMPLETED)} active={filterStatus === FILTER.COMPLETED}>Completed</sc.Filter>
         </div>
       </sc.Tools>
       <form onSubmit={handleAdd}>
@@ -95,7 +110,7 @@ const TotoList = () => {
         <sc.Button wfd-invisible="true">Add Task</sc.Button>
       </form>
 
-      <Items todos={todos} onDelete={handleDelete} onToggle={handleToggle} filterStatus={filterStatus}/>
+      <Items todos={todos} onDelete={handleDelete} onToggle={handleToggle} />
     </sc.Container>
   );
 };
