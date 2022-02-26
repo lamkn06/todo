@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 namespace sc {
   export const Container = styled.div`
@@ -23,8 +23,40 @@ namespace sc {
   `;
 
   export const Button = styled.button`
-    display: none
-  `
+    display: none;
+  `;
+
+  export const Filter = styled.button<{ active: boolean }>`
+    border: 0;
+    padding: 3px 8px;
+    background: 0;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    font-family: var(--font);
+    color: #8a9ca5;
+    border-radius: 20px;
+
+    ${props =>
+      props.active &&
+      css`
+        background-color: #7996a5;
+        color: #fff;
+      `}
+  `;
+
+  export const Tools = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 0 20px;
+  `;
+
+  export const Count = styled.div`
+    color: #8a9ca5;
+    font-size: 14px; ;
+  `;
 }
 
 export default sc;

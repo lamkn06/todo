@@ -6,9 +6,11 @@ import { Item } from '../../components/Item/Item';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
+
 const TotoList = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [newValue, setNewValue] = useState<string>('');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
 
   useEffect(() => {
     setTodos([
@@ -29,6 +31,10 @@ const TotoList = () => {
       },
     ]);
   }, []);
+
+  const handleFilterStatus = (status: string) => {
+    setFilterStatus(status);
+  };
 
   const handleChange = event => {
     setNewValue(event.target.value);
@@ -72,7 +78,15 @@ const TotoList = () => {
 
   return (
     <sc.Container>
-      <sc.Header>Todo List</sc.Header>
+      <sc.Header>{new Date().toDateString()}</sc.Header>
+      <sc.Tools>
+        <sc.Count>{todos.length} tasks</sc.Count>
+        <div>
+          <sc.Filter onClick={() => handleFilterStatus('all')} active={filterStatus === 'all'}>All</sc.Filter>
+          <sc.Filter onClick={() => handleFilterStatus('active')} active={filterStatus === 'active'}>Active</sc.Filter>
+          <sc.Filter onClick={() => handleFilterStatus('completed')} active={filterStatus === 'completed'}>Completed</sc.Filter>
+        </div>
+      </sc.Tools>
       <form onSubmit={handleAdd}>
         <Input
           placeholder="Add a new task..."
@@ -81,7 +95,20 @@ const TotoList = () => {
         />
         <sc.Button wfd-invisible="true">Add Task</sc.Button>
       </form>
-      {todos.map(todo => (
+
+      {todos.filter(todo => {
+        if (filterStatus === 'all') {
+          return todo
+        }
+        if (filterStatus === 'active') {
+          return !todo.isComplete
+        }
+        if (filterStatus === 'completed') {
+          return  !!todo.isComplete
+        }
+
+        return true
+      }).map(todo => (
         <Item
           key={todo.id}
           checked={todo.isComplete}
