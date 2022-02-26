@@ -5,7 +5,7 @@
     "@babel/preset-react"
   ],
   "plugins": [
-    "react-hot-loader/babel",
+    
     "babel-plugin-react-require",
     "@babel/plugin-transform-modules-commonjs",
     [
@@ -14,19 +14,34 @@
         "allowNamespaces": true
       }
     ],
+    [
+      "@babel/plugin-proposal-private-property-in-object",
+      {
+        "loose": true
+      }
+    ],
     "@babel/plugin-proposal-export-default-from",
-    "@babel/plugin-syntax-dynamic-import"
+    "@babel/plugin-syntax-dynamic-import",
+    [
+      "babel-plugin-styled-components",
+      {
+        "displayName": true
+      }
+    ]
   ],
   "env": {
     "production": {
       "only": ["src"],
-      "plugins": ["@babel/plugin-transform-react-inline-elements"]
+      "plugins": [
+        "@babel/plugin-transform-react-inline-elements",
+        [
+          "babel-plugin-styled-components",
+          { "ssr": true, "displayName": false, "preprocess": false }
+        ]
+      ]
     },
     "test": {
-      "plugins": [
-        "@babel/plugin-transform-modules-commonjs",
-        "dynamic-import-node"
-      ]
+      "plugins": ["@babel/plugin-transform-modules-commonjs", "dynamic-import-node"]
     }
   }
 }
