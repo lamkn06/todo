@@ -44,7 +44,7 @@ module.exports = () => {
 
       new HtmlWebpackPlugin({
         inject: true,
-        title: 'GetAll',
+        title: 'Todos',
         template: path.join(__dirname, '../src/index.ejs'),
         minify: {
           removeComments: true,

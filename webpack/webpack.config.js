@@ -67,7 +67,7 @@ module.exports = env => {
     plugins: [
       new HtmlWebpackPlugin({
         inject: true,
-        title: 'GetAll',
+        title: 'Todos',
         template: path.join(__dirname, '../src/index.ejs'),
       }),
     ],

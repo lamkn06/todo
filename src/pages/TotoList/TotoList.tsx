@@ -1,10 +1,9 @@
+import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { Input } from '../../components/Input/Input';
+import { Items } from '../../components/Items/Items';
 import { Todo } from '../../models/todo';
 import sc from './TodoList.styled';
-import { v4 as uuidv4 } from 'uuid';
-import { Item } from '../../components/Item/Item';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 
 const TotoList = () => {
@@ -96,28 +95,7 @@ const TotoList = () => {
         <sc.Button wfd-invisible="true">Add Task</sc.Button>
       </form>
 
-      {todos.filter(todo => {
-        if (filterStatus === 'all') {
-          return todo
-        }
-        if (filterStatus === 'active') {
-          return !todo.isComplete
-        }
-        if (filterStatus === 'completed') {
-          return  !!todo.isComplete
-        }
-
-        return true
-      }).map(todo => (
-        <Item
-          key={todo.id}
-          checked={todo.isComplete}
-          label={todo.name}
-          id={todo.id}
-          onToggle={handleToggle}
-          onDelete={handleDelete}
-        />
-      ))}
+      <Items todos={todos} onDelete={handleDelete} onToggle={handleToggle} filterStatus={filterStatus}/>
     </sc.Container>
   );
 };
